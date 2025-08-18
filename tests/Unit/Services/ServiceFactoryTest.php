@@ -10,6 +10,7 @@ use Radeir\Services\DepositToIbanService;
 use Radeir\Services\IbanInquiryService;
 use Radeir\Services\IbanOwnerVerificationService;
 use Radeir\Services\ServiceFactory;
+use Radeir\Services\ShahkarService;
 use Radeir\Services\TokenManager\TokenManagerInterface;
 
 class ServiceFactoryTest extends TestCase
@@ -86,6 +87,17 @@ class ServiceFactoryTest extends TestCase
 
 		// Test that the same instance is returned when called again (caching works)
 		$service2 = $this->serviceFactory->createIbanOwnerVerificationService();
+		$this->assertSame($service1, $service2, 'Factory should return the same instance on subsequent calls');
+	}
+
+	public function testCreateShahkarService()
+	{
+		// Test that the service is created with correct type
+		$service1 = $this->serviceFactory->createShahkarService();
+		$this->assertInstanceOf(ShahkarService::class, $service1);
+
+		// Test that the same instance is returned when called again (caching works)
+		$service2 = $this->serviceFactory->createShahkarService();
 		$this->assertSame($service1, $service2, 'Factory should return the same instance on subsequent calls');
 	}
 

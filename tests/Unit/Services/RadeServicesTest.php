@@ -8,6 +8,7 @@ use Radeir\DTOs\CardToIbanDTO;
 use Radeir\DTOs\DepositToIbanDTO;
 use Radeir\DTOs\IbanInquiryDTO;
 use Radeir\DTOs\IbanOwnerVerificationDTO;
+use Radeir\DTOs\ShahkarDTO;
 use Radeir\Services\CardToDepositService;
 use Radeir\Services\CardToIbanService;
 use Radeir\Services\DepositToIbanService;
@@ -15,6 +16,7 @@ use Radeir\Services\IbanInquiryService;
 use Radeir\Services\IbanOwnerVerificationService;
 use Radeir\Services\RadeServices;
 use Radeir\Services\ServiceFactory;
+use Radeir\Services\ShahkarService;
 use Radeir\Services\TokenManager\TokenManagerInterface;
 
 class RadeServicesTest extends TestCase
@@ -317,6 +319,41 @@ class RadeServicesTest extends TestCase
 		$this->assertInstanceOf(IbanOwnerVerificationDTO::class, $result);
 		$this->assertEquals('trace345', $result->trackID);
 		$this->assertEquals('yes', $result->result);
+	}
+	public function testShahkar()
+	{
+		// 1. Create the mocks
+		$serviceFactory = $this->createMock(ServiceFactory::class);
+		$ibanOwnerVerificationService = $this->createMock(ShahkarService::class);
+		$tokenManager = $this->createMock(TokenManagerInterface::class);
+
+		// 2. Configure mocks to avoid HTTP calls
+		$serviceFactory->method('createShahkarService')->willReturn($ibanOwnerVerificationService);
+
+		// 3. Set up the expected return value
+		$mockDTO = new ShahkarDTO('trace345', true);
+
+		// 4. Configure service mock to return expected value
+		$ibanOwnerVerificationService->method('shahkar')->with('09123456789', '0082633053',)->willReturn($mockDTO);
+
+		// 5. Create a test double for RadeServices
+		$radeServices = $this->getMockBuilder(RadeServices::class)
+			->setConstructorArgs([['baseUrl' => 'https://test.com'], $tokenManager])
+			->onlyMethods(['__construct'])
+			->getMock();
+
+		// 6. Set the mocked service factory
+		$reflection = new \ReflectionProperty(RadeServices::class, 'serviceFactory');
+		$reflection->setAccessible(true);
+		$reflection->setValue($radeServices, $serviceFactory);
+
+		// 7. Test the method
+		$result = $radeServices->shahkar('09123456789', '0082633053');
+
+		// 8. Assert the result
+		$this->assertInstanceOf(ShahkarDTO::class, $result);
+		$this->assertEquals('trace345', $result->trackID);
+		$this->assertEquals(true, $result->result);
 	}
 
 	public function testConstructorWithCustomTokenManager()

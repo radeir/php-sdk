@@ -138,6 +138,7 @@ class MyController
 - [حساب به شبا](docs/fa/deposit-to-iban.md)
 - [استعلام شبا](docs/fa/iban-inquiry.md)
 - [انطباق شماره شبا با کد ملی](docs/fa/iban-owner-verification.md)
+- [شاهکار(انطباق کد ملی با شماره موبایل)](docs/fa/shahkar.md)
 
 
 ## مشارکت در پروژه

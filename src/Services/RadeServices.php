@@ -7,6 +7,7 @@ use Radeir\DTOs\CardToIbanDTO;
 use Radeir\DTOs\DepositToIbanDTO;
 use Radeir\DTOs\IbanInquiryDTO;
 use Radeir\DTOs\IbanOwnerVerificationDTO;
+use Radeir\DTOs\ShahkarDTO;
 use Radeir\Services\TokenManager\DefaultTokenManager;
 use Radeir\Services\TokenManager\TokenManagerInterface;
 
@@ -61,6 +62,16 @@ class RadeServices
 			$birthDateYear,
 			$birthDateMonth,
 			$birthDateDay,
+		);
+	}
+
+	public function shahkar(
+		string $mobile,
+		string $nationalityCode,
+	): ShahkarDTO {
+		return $this->serviceFactory->createShahkarService()->shahkar(
+			$mobile,
+			$nationalityCode,
 		);
 	}
 }

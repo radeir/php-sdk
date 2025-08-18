@@ -107,6 +107,7 @@ This package provides the following services:
 - [Deposit account to Iban](docs/en/deposit-to-iban.md)
 - [Iban inquiry](docs/en/iban-inquiry.md)
 - [Iban owner verification](docs/en/iban-owner-verification.md)
+- [Shahkar](docs/en/shahkar.md)
 
 For more information about token management and save, please refer to the
 [Token Management Documentation](docs/en/token-manager.md).

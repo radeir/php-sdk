@@ -61,4 +61,13 @@ class ServiceFactory
 		return $this->services[$serviceName];
 	}
 
+	public function createShahkarService(): ShahkarService {
+		$serviceName = ServiceEnum::SHAHKAR->value;
+		if (!isset($this->services[$serviceName])) {
+			$this->services[$serviceName] = new ShahkarService($this->tokenManager, $this->config);
+		}
+
+		return $this->services[$serviceName];
+	}
+
 }

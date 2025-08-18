@@ -35,7 +35,7 @@
 		"phpstan/phpstan": "2.1.22",
 		"rector/rector": "2.1.2",
 		"larapack/dd": "^1.1",
-		"phpunit/phpunit": "^10.0"
+		"phpunit/phpunit": "10.5.52"
 	},
 	"extra": {
 		"laravel": {
